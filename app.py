@@ -11,7 +11,7 @@ app.secret_key = os.urandom(24)
 db = SQLAlchemy(app)
 
 
-class Todo(db.Model):
+class Song(db.Model):
     id = db.Column(db.String(36), primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     artist = db.Column(db.String(200), nullable=False)
@@ -25,7 +25,7 @@ def index():
 
 @app.route('/view-all', methods=['GET'])
 def viewAll():
-    songs = Todo.query.order_by(Todo.title).all()
+    songs = Song.query.order_by(Song.title).all()
     return render_template('view_all.html', songs=songs)
 
 
@@ -38,7 +38,7 @@ def upload():
         album = request.form['album']
         f = request.files['file']
         f.save(os.path.join(app.config['UPLOAD_FOLDER'], id + '.mp3'))
-        new_task = Todo(id=id, title=title, artist=artist, album=album)
+        new_task = Song(id=id, title=title, artist=artist, album=album)
 
         try:
             db.session.add(new_task)
@@ -49,13 +49,13 @@ def upload():
             flash("There was an error adding the song")
 
     else:
-        songs = Todo.query.order_by(Todo.title).all()
+        songs = Song.query.order_by(Song.title).all()
         return render_template('upload.html')
 
 
 @app.route('/delete/<string:id>')
 def delete(id):
-    task_to_delete = Todo.query.get_or_404(id)
+    task_to_delete = Song.query.get_or_404(id)
 
     try:
         os.remove(os.path.join(app.config['UPLOAD_FOLDER'], id + '.mp3'))
@@ -68,7 +68,7 @@ def delete(id):
 
 @app.route('/play/<string:id>')
 def play(id):
-    song = Todo.query.filter_by(id=id).first()
+    song = Song.query.filter_by(id=id).first()
     return render_template('play.html', id=id, songTitle=song.title)
 
 
@@ -88,10 +88,10 @@ def search():
         title = request.form['title']
         artist = request.form['artist']
         album = request.form['album']
-        new_task = Todo(id=id, title=title, artist=artist, album=album)
+        new_task = Song(id=id, title=title, artist=artist, album=album)
 
         try:
-            songs = Todo.query
+            songs = Song.query
             if title == '' and artist == '' and album == '':
                 flash("Please fill any field to search")
                 return render_template('search.html')
@@ -111,4 +111,5 @@ def search():
 
 
 if __name__ == "__main__":
+    db.create_all()
     app.run(debug=True)
