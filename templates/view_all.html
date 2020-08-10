@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Song Manager</title>
+{% endblock %}
+
+{% block body %}
+<nav class="navbar navbar-expand-sm bg-light navbar-light">
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/view-all">View All</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/upload">Upload</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/search">Search</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#">Play</a>
+        </li>
+    </ul>
+</nav>
+<div class="container p-3 my-3 bg-dark text-white text-center">
+    <h1>All Songs</h1>
+</div>
+<div class="container text-center">
+    {% if songs|length < 1 %}
+    <h4>There are no Songs. Upload one first!</h4>
+    {% else %}
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Album</th>
+                <th>Operations</th>
+            </tr>
+        </thead>
+        {% for song in songs %}
+        <tr>
+            <td>{{ song.title }}</td>
+            <td>{{ song.artist }}</td>
+            <td>{{ song.album }}</td>
+            <td>
+                <a href="/play/{{song.id}}">Play</a>
+                <br>
+                <a href="/delete/{{song.id}}">Delete</a>
+                <br>
+                <a href="/download/{{song.id}}">Download</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>
+{% endblock %}

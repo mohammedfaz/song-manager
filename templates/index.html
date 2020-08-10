@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Song Manager</title>
+{% endblock %}
+
+{% block body %}
+<nav class="navbar navbar-expand-sm bg-light navbar-light">
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+      <a class="nav-link active" href="/">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/view-all">View All</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/upload">Upload</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/search">Search</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" href="#">Play</a>
+    </li>
+  </ul>
+</nav>
+<div class="container p-3 my-3 bg-dark text-white text-center">
+  <h1>Song Manager</h1>
+</div>
+<div class="container">
+  <h3>Welcome to Song Manager</h3>
+  <h5>The following operations can be performed :-</h5>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link" href="/view-all">1. View all songs</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/upload">2. Upload song</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/search">3. Search for a song</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" href="#">4. Play a Song</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" href="#">5. Delete a Song</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" href="#">6. Download a Song</a>
+    </li>
+  </ul>
+</div>
+
+{% endblock %}

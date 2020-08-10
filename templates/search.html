@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Search Song</title>
+{% endblock %}
+
+{% block body %}
+<nav class="navbar navbar-expand-sm bg-light navbar-light">
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/view-all">View All</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/upload">Upload</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/search">Search</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#">Play</a>
+        </li>
+    </ul>
+</nav>
+<div class="container p-3 my-3 bg-dark text-white text-center">
+    <h1>Search Song</h1>
+</div>
+<div class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    {% block page_content %}{% endblock %}
+</div>
+<div class="container">
+    <form class="form-inline" action="/search" method="POST">
+        <label for="title" class="mr-sm-2">Title:</label>
+        <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter title" id="title" name="title">
+        <label for="artist" class="mr-sm-2">Artist:</label>
+        <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter artist" id="artist" name="artist">
+        <label for="album" class="mr-sm-2">Album:</label>
+        <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter album" id="album" name="album">
+        <button type="submit" class="btn btn-primary mb-2">Search</button>
+    </form>
+</div>
+<div class="container text-center">
+    {% if result %}
+    {% if songs|length < 1 %}
+    <h4>No song found!</h4>
+    {% else %}
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Album</th>
+                <th>Operations</th>
+            </tr>
+        </thead>
+        {% for song in songs %}
+        <tr>
+            <td>{{ song.title }}</td>
+            <td>{{ song.artist }}</td>
+            <td>{{ song.album }}</td>
+            <td>
+                <a href="/play/{{song.id}}">Play</a>
+                <br>
+                <a href="/delete/{{song.id}}">Delete</a>
+                <br>
+                <a href="/download/{{song.id}}">Download</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+    {% endif %}
+</div>
+
+{% endblock %}

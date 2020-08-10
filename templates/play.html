@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Task Master</title>
+{% endblock %}
+
+{% block body %}
+<nav class="navbar navbar-expand-sm bg-light navbar-light">
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+      <a class="nav-link" href="/">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/view-all">View All</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/upload">Upload</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/search">Search</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled active" href="#">Play</a>
+    </li>
+  </ul>
+</nav>
+<div class="container p-3 my-3 bg-dark text-white text-center">
+  <h1>Play Song</h1>
+</div>
+<div class="container">
+  <h5>Song : {{songTitle}}</h5>
+  <br>
+  <audio controls preload="true">
+    <source src={{ '/song/'+id}} type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+</div>
+{% endblock %}
