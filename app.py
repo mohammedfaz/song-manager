@@ -46,7 +46,7 @@ def upload():
             flash("Song added successfully")
             return render_template('upload.html')
         except:
-            flash("There was an error adding the song")
+            flash("There was an error uploading the song")
 
     else:
         songs = Song.query.order_by(Song.title).all()
@@ -63,7 +63,7 @@ def delete(id):
         db.session.commit()
         return redirect('/view-all')
     except:
-        return 'There was a problem deleting that task'
+        return 'There was a problem deleting the song'
 
 
 @app.route('/play/<string:id>')
@@ -103,9 +103,8 @@ def search():
                 songs = songs.filter_by(album=album)
             songs = songs.all()
             return render_template('search.html', songs=songs, result=True)
-        except Exception as e:
-            return str(e)
-            # return 'There was an issue adding your task'
+        except :
+            return 'There was an issue searching song'
     else:
         return render_template('search.html')
 
